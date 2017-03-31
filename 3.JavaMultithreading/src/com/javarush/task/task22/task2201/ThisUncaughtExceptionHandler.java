@@ -1,8 +1,5 @@
 package com.javarush.task.task22.task2201;
 
-import java.text.Format;
-import java.util.Formatter;
-
 public class ThisUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread t, Throwable e) {
@@ -18,26 +15,15 @@ public class ThisUncaughtExceptionHandler implements Thread.UncaughtExceptionHan
     }
 
     protected String getFormattedStringForOtherThread(Thread t, Throwable e, String string) {
-        Formatter fmt = new Formatter();
-        fmt.format(string, e.getClass().getSimpleName(), e.getMessage() , t.getName());
-
-        return fmt.toString(); // RuntimeException : java.lang.StringIndexOutOfBoundsException: String index out of range: -1 : 3#
+        return String.format(string, e.getClass().getSimpleName(), e.getCause() , t.getName());
     }
-
-// java.lang.StringIndexOutOfBoundsException: String index out of range: -1 : TooShortStringSecondThreadException : 2#
 
     protected String getFormattedStringForSecondThread(Thread t, Throwable e, String string) {
-        Formatter fmt = new Formatter();
-        fmt.format(string, e.getCause(), e.getMessage(), t.getName());
-        return fmt.toString();
+        return String.format(string, e.getCause(), e.getClass().getSimpleName(), t.getName());
     }
 
-// 1# : TooShortStringFirstThreadException : java.lang.StringIndexOutOfBoundsException: String index out of range: -1
-
     protected String getFormattedStringForFirstThread(Thread t, Throwable e, String string) {
-        Formatter fmt = new Formatter();
-        fmt.format(string, t.getName(), e.getMessage(), e.getCause());
-        return fmt.toString();
+        return String.format(string, t.getName(), e.getClass().getSimpleName(), e.getCause());
     }
 }
 

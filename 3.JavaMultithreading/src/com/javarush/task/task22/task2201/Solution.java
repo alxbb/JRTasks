@@ -41,27 +41,25 @@ public class Solution {
         this.thread3.start();
     }
 
-    public synchronized String getPartOfString(String string, String threadName) {
+    public synchronized String getPartOfString(String string, String threadName) throws TooShortStringFirstThreadException, TooShortStringSecondThreadException{
         int firstIdx;
         int lastIdx;
-        String out;
+        String out = "";
 
         firstIdx = string.indexOf('\t');
         lastIdx  = string.lastIndexOf('\t');
         try {
             out = string.substring(firstIdx + 1, lastIdx);
-        } catch (RuntimeException e){
-                String msg = e.getMessage();
+        } catch (StringIndexOutOfBoundsException e){
                 switch (threadName){
                     case FIRST_THREAD_NAME:
-                        throw new TooShortStringFirstThreadException(msg);
+                        throw new TooShortStringFirstThreadException(e);
                     case SECOND_THREAD_NAME:
-                        throw new RuntimeException( "TooShortStringSecondThreadException", e );
+                        throw new TooShortStringSecondThreadException(e);
                     default:
                         throw new RuntimeException(e);
                 }
         }
-
         return out;
     }
 }
