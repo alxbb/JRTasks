@@ -14,8 +14,16 @@ public class Solution {
 
     public static Solution[] getTwoSolutions() {
         Solution[] solutions = new Solution[2];
-        solutions[0].innerClasses = new InnerClass[2];
-        solutions[1].innerClasses = new InnerClass[2];
+        Solution s1 = new Solution();
+        Solution s2 = new Solution();
+        s1.innerClasses[0] = s1.new InnerClass();
+        s1.innerClasses[1] = s1.new InnerClass();
+        s2.innerClasses[0] = s2.new InnerClass();
+        s2.innerClasses[1] = s2.new InnerClass();
+
+        solutions[0] = s1;
+        solutions[1] = s2;
+
         return solutions;
     }
 
