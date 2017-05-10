@@ -2,12 +2,6 @@ package com.javarush.task.task24.task2405;
 
 /* 
 Black box
-1. Восстанови логику метода someAction для поля solutionAction.
-2. Пример вывода смотри в комментарии к методу main.
-3. Подсказка: метод someAction анонимного класса поля solutionAction должен вызвать метод сабкласса FirstClass,
-если param > 0, иначе вызвать метод сабкласса SecondClass.
-
-Не изменяй метод main!
 */
 public class Solution implements Action {
     public static int countActionObjects;
@@ -15,25 +9,33 @@ public class Solution implements Action {
     private int param;
 
     private Action solutionAction = new Action() {
-        //!!!!! Changes can be here
-        //!!!!! Изменения могут быть тут
+        FirstClass firstClass;
+        SecondClass secondClass;
 
         public void someAction() {
-            //!!!!! All changes have to be here
-            //!!!!! Все изменения должны быть только тут
-            if(param > 0) {
-                FirstClass firstClass = new FirstClass() {
+            if (param > 0) {
+                firstClass = new FirstClass() {
                     @Override
                     public Action getDependantAction() {
-                        return null;
+                        super.someAction();
+                        return new Action() {
+                            @Override
+                            public void someAction() {}
+                        };
                     }
                 };
-            } else {
-                SecondClass secondClass = new SecondClass(){
+                int min = param;
+                for (int i = 0; i < min; i++) {
+                    System.out.println(param--);
+                }
+                firstClass.someAction();
 
-                };
             }
-        };
+                secondClass = new SecondClass();
+                secondClass.someAction();
+                System.out.println(SecondClass.SPECIFIC_ACTION_FOR_ANONYMOUS_SECOND_CLASS_PARAM.replaceAll("\n", "") + param);
+
+        }
     };
 
 
