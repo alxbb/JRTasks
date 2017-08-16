@@ -9,6 +9,10 @@ import java.nio.file.Paths;
 public class Archiver {
     public static void main(String[] args) throws IOException {
 
+//        FileProperties fp1 = new FileProperties("c:/fakefile1",10000, 1000, 1);
+//        FileProperties fp2 = new FileProperties("c:/fakefile2",0, 0, 1);
+//        System.out.println(fp1);
+//        System.out.println(fp2);
 //        FileManager fm = new FileManager(Paths.get("C:\\TEMP\\forms60\\"));
 //        for(Path p : fm.getFileList()) System.out.println(p.toString());
 
