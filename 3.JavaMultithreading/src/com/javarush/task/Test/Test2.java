@@ -11,9 +11,11 @@ public class Test2 {
         double d7 = 0;
         double d8 = 0;
         double d9 = 0;
+        System.out.println(Long.MAX_VALUE);
         long stime = System.currentTimeMillis();
+        //9_223_372_036_854_775_807
 
-        for (int i = 0; i < 999_000_000; i++) {
+        for (long i = 0; i < Long.MAX_VALUE/10_000_000_000L; i++) {
             d1 = d1 * d1;
 //            d1 = d1 * d1;
             d2 = d2 * d2;
