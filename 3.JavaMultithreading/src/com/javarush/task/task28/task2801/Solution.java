@@ -1,6 +1,6 @@
 package com.javarush.task.task28.task2801;
 
-/* 
+/*
 Осваиваем switch
 */
 public class Solution {
@@ -22,6 +22,17 @@ public class Solution {
     }
 
     public static void switchTest(Enum obj) {
-        //add your code here
+        String out = "";
+        switch (obj.getDeclaringClass().getSimpleName()){
+            case "E1":
+                out = "it's E1." + obj;
+                break;
+            case "E2":
+                out = "it's E1." + obj;
+                break;
+            default:
+                out = "undefined";
+        }
+        System.out.println(out);
     }
 }
