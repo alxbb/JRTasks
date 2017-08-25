@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class SuperscriptAction extends StyledEditorKit.StyledTextAction{
     public SuperscriptAction() {
-        super(String.valueOf(StyleConstants.Superscript));
+        super(StyleConstants.Superscript.toString());
     }
 
     @Override
@@ -18,7 +18,7 @@ public class SuperscriptAction extends StyledEditorKit.StyledTextAction{
         if (editor != null) {
             MutableAttributeSet mutableAttributeSet = getStyledEditorKit(editor).getInputAttributes();
             SimpleAttributeSet simpleAttributeSet = new SimpleAttributeSet();
-            StyleConstants.setStrikeThrough(simpleAttributeSet, !StyleConstants.isStrikeThrough(mutableAttributeSet));
+            StyleConstants.setSuperscript(simpleAttributeSet, !StyleConstants.isSuperscript(mutableAttributeSet));
             setCharacterAttributes(editor, simpleAttributeSet, false);
         }
     }

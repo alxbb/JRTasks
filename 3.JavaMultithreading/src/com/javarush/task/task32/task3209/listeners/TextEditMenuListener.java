@@ -6,7 +6,11 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 public class TextEditMenuListener implements MenuListener {
-    public TextEditMenuListener(View view) {}
+    private View view;
+
+    public TextEditMenuListener(View view) { this.view = view; }
+
+    public boolean isHtmlTabSelected(){return view.getContentPane()}
 
     @Override
     public void menuSelected(MenuEvent e) {}

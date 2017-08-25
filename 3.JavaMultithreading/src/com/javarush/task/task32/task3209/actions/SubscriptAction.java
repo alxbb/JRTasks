@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class SubscriptAction extends StyledEditorKit.StyledTextAction {
     public SubscriptAction() {
-        super(StyleConstants.Subscript);
+        super(StyleConstants.Subscript.toString());
     }
 
     @Override
@@ -18,7 +18,7 @@ public class SubscriptAction extends StyledEditorKit.StyledTextAction {
         if (editor != null) {
             MutableAttributeSet mutableAttributeSet = getStyledEditorKit(editor).getInputAttributes();
             SimpleAttributeSet simpleAttributeSet = new SimpleAttributeSet();
-            StyleConstants.setStrikeThrough(simpleAttributeSet, !StyleConstants.isStrikeThrough(mutableAttributeSet));
+            StyleConstants.setSubscript(simpleAttributeSet, !StyleConstants.isSubscript(mutableAttributeSet));
             setCharacterAttributes(editor, simpleAttributeSet, false);
         }
     }
