@@ -3,10 +3,9 @@ package com.javarush.task.task27.task2712.statistic;
 import com.javarush.task.task27.task2712.kitchen.Cook;
 import com.javarush.task.task27.task2712.statistic.event.EventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventType;
-import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 public class StatisticManager {
     private static StatisticManager manager = new StatisticManager();
@@ -24,12 +23,13 @@ public class StatisticManager {
         statisticStorage.put(data);
     }
 
-    public Map<Date, Integer> getAdvertisementProfit(){ /* TODO*/
-        List<EventDataRow> list = statisticStorage.getStorage().get(EventType.SELECTED_VIDEOS);
+    public Map<Date, List<EventDataRow>> getAdvertisementProfit(){ /* TODO*/
+        List<EventDataRow> list = statisticStorage.get(EventType.SELECTED_VIDEOS);
 
-        Map<Date, Integer> retMap = new HashMap<>();
+        Map<Date, List<EventDataRow>> retMap = list.stream().collect(Collectors.groupingBy(EventDataRow::getDate));
 
-        return null;
+
+        return retMap;
     }
 
     private class StatisticStorage{
@@ -43,8 +43,9 @@ public class StatisticManager {
         private void put(EventDataRow data){
             storage.get(data.getType()).add(data);
         }
-        public Map<EventType, List<EventDataRow>> getStorage() {
-            return storage;
+
+        public List<EventDataRow> get(EventType e) {
+            return storage.get(e);
         }
     }
 }
