@@ -1,9 +1,12 @@
 package com.javarush.task.task27.task2712.statistic;
 
 import com.javarush.task.task27.task2712.kitchen.Cook;
+import com.javarush.task.task27.task2712.statistic.event.CookedOrderEventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventType;
+import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataRow;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.*;
 
@@ -23,13 +26,47 @@ public class StatisticManager {
         statisticStorage.put(data);
     }
 
-    public Map<Date, List<EventDataRow>> getAdvertisementProfit(){ /* TODO*/
+    public Map<String, Long> getAdvertisementProfit(){ /* TODO*/
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        String date;
+        long amount;
         List<EventDataRow> list = statisticStorage.get(EventType.SELECTED_VIDEOS);
+        Map<String,Long> map = new HashMap<>();
 
-        Map<Date, List<EventDataRow>> retMap = list.stream().collect(Collectors.groupingBy(EventDataRow::getDate));
+        for(EventDataRow e : list){
+            date = sdf.format(e.getDate()).toUpperCase();
+            if(map.containsKey(date)) map.put(date, ((VideoSelectedEventDataRow) e).getAmount() + map.get(date));
+            else map.put(date, ((VideoSelectedEventDataRow) e).getAmount());
+        }
 
+        return map;
+    }
 
-        return retMap;
+    public Map<String, Map<String,Integer>> getCookBusy(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        String date;
+        long amount;
+
+        Map<String,Map<String, Integer>> map = new HashMap<>();
+        List<EventDataRow> list = statisticStorage.get(EventType.COOKED_ORDER);
+        for(EventDataRow e : list){
+            CookedOrderEventDataRow c = (CookedOrderEventDataRow) e;
+            date = sdf.format(e.getDate());
+            if(map.containsKey(date)){
+                Map<String,Integer> innerMap = map.get(date);
+                if(innerMap.containsKey(c.getCookName())){
+                    innerMap.put(c.getCookName(),innerMap.get(c.getCookName())+c.getTime());
+                } else {
+                    innerMap.put(c.getCookName(),c.getTime());
+                }
+            } else {
+                Map<String, Integer> newMap = new HashMap<>();
+                map.put(date, newMap);
+                newMap.put(c.getCookName(),c.getTime());
+            }
+        }
+
+        return map;
     }
 
     private class StatisticStorage{

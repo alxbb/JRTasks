@@ -33,12 +33,14 @@ public class AdvertisementManager {
         sortList(toShow);
         printList(toShow);
         toShow.stream().forEach(Advertisement::revalidate);
+        Long amount = toShow.stream().map(a->a.getAmountPerOneDisplaying()).reduce(Long::sum).get();
+
         StatisticManager
                 .getInstance()
                 .register(
                         new VideoSelectedEventDataRow(
                                 toShow,
-                                toShow.size(),
+                                amount,
                                 timeSeconds));
     }
 

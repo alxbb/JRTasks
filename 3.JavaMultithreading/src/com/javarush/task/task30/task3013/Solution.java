@@ -8,6 +8,7 @@ public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
         int number = Integer.MAX_VALUE - 133;
+        System.out.println(number);
         System.out.println(Integer.toString(number, 2));
 
         String result = Integer.toString(solution.resetLowerBits(number), 2);
@@ -15,7 +16,11 @@ public class Solution {
     }
 
     public int resetLowerBits(int number) {
-        //напишите тут ваш код
-        return 0;
+        number |= number >> 1;
+        number |= number >> 2;
+        number |= number >> 4;
+        number |= number >> 8;
+        number |= number >> 16;
+        return number & ~number >> 1;
     }
 }
