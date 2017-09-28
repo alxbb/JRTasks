@@ -1,5 +1,7 @@
 package com.javarush.task.task27.task2712.statistic;
 
+import com.javarush.task.task27.task2712.ad.Advertisement;
+import com.javarush.task.task27.task2712.ad.AdvertisementStorage;
 import com.javarush.task.task27.task2712.kitchen.Cook;
 import com.javarush.task.task27.task2712.statistic.event.CookedOrderEventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventDataRow;
@@ -7,6 +9,7 @@ import com.javarush.task.task27.task2712.statistic.event.EventType;
 import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataRow;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.*;
 
@@ -26,32 +29,32 @@ public class StatisticManager {
         statisticStorage.put(data);
     }
 
-    public Map<String, Long> getAdvertisementProfit(){ /* TODO*/
+    public Map<Long, Long> getAdvertisementProfit(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-        String date;
+        Long date;
         long amount;
         List<EventDataRow> list = statisticStorage.get(EventType.SELECTED_VIDEOS);
-        Map<String,Long> map = new HashMap<>();
+        Map<Long, Long> map = new TreeMap<>((x,y)->(y.compareTo(x)));
 
         for(EventDataRow e : list){
-            date = sdf.format(e.getDate()).toUpperCase();
-            if(map.containsKey(date)) map.put(date, ((VideoSelectedEventDataRow) e).getAmount() + map.get(date));
-            else map.put(date, ((VideoSelectedEventDataRow) e).getAmount());
+            VideoSelectedEventDataRow v = (VideoSelectedEventDataRow) e;
+            date = (v.getDate().getTime()/86400000) * 86400000;
+            if(map.containsKey(date)) map.put(date, v.getAmount() + map.get(date));
+            else map.put(date, v.getAmount());
         }
-
         return map;
     }
 
-    public Map<String, Map<String,Integer>> getCookBusy(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-        String date;
+    public Map<Long, Map<String,Integer>> getCookBusy(){
+        Long date;
         long amount;
 
-        Map<String,Map<String, Integer>> map = new HashMap<>();
+        Map<Long, Map<String, Integer>> map = new TreeMap<>((x,y)->(y.compareTo(x)));
         List<EventDataRow> list = statisticStorage.get(EventType.COOKED_ORDER);
+
         for(EventDataRow e : list){
             CookedOrderEventDataRow c = (CookedOrderEventDataRow) e;
-            date = sdf.format(e.getDate());
+            date = (e.getDate().getTime() / 86400000) * 86400000;
             if(map.containsKey(date)){
                 Map<String,Integer> innerMap = map.get(date);
                 if(innerMap.containsKey(c.getCookName())){
@@ -60,12 +63,11 @@ public class StatisticManager {
                     innerMap.put(c.getCookName(),c.getTime());
                 }
             } else {
-                Map<String, Integer> newMap = new HashMap<>();
+                Map<String, Integer> newMap = new TreeMap<>((s1,s2)->(s1.compareTo(s2)));
                 map.put(date, newMap);
                 newMap.put(c.getCookName(),c.getTime());
             }
         }
-
         return map;
     }
 

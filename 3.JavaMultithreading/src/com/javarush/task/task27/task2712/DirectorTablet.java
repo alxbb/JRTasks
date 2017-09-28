@@ -2,27 +2,41 @@ package com.javarush.task.task27.task2712;
 
 import com.javarush.task.task27.task2712.statistic.StatisticManager;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DirectorTablet {
-    public void printAdvertisementProfit(){
-        long total = 0;
-        Map<String,Long> map = StatisticManager.getInstance().getAdvertisementProfit();
-        List<String> list = new ArrayList<>();
-        for (Map.Entry<String, Long> pair : map.entrySet()){
-            total += pair.getValue();
-            list.add(pair.getKey() + " - " + pair.getValue());
-        }
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
 
-        Collections.sort(list,(s1,s2)->(s2.compareTo(s1)));
-        list.add("Total - " + total);
+    public void printAdvertisementProfit(){
+        Date tmpDate = new Date();
+        long total = 0;
+        Map<Long,Long> map = StatisticManager.getInstance().getAdvertisementProfit();
+        List<String> list = new ArrayList<>();
+
+        for (Map.Entry<Long, Long> pair : map.entrySet()){
+            tmpDate.setTime(pair.getKey());
+            total += pair.getValue();
+            list.add(sdf.format(tmpDate).toString() + " - " + pair.getValue()/100.0);
+        }
+        list.add("Total - " + total/100.00);
         for(String s : list) ConsoleHelper.writeMessage(s);
     }
 
     public void printCookWorkloading(){
-        Map<String,Map<String, Integer>> map = StatisticManager.getInstance().getCookBusy();
-        map.keySet();
+        Date tmpDate = new Date();
+        Map<String,Integer> innerMap;
+        Map<Long,Map<String, Integer>> map = StatisticManager.getInstance().getCookBusy();
 
+        for(Map.Entry<Long, Map<String,Integer>> trio : map.entrySet()){
+            tmpDate.setTime(trio.getKey());
+            ConsoleHelper.writeMessage(sdf.format(tmpDate));
+            innerMap = trio.getValue();
+            for(Map.Entry<String,Integer> pair : innerMap.entrySet()){
+                ConsoleHelper.writeMessage(pair.getKey() + " - " + pair.getValue() + " min");
+            }
+            ConsoleHelper.writeMessage("");
+        }
     }
     public void printActiveVideoSet(){}
     public void printArchivedVideoSet(){}
