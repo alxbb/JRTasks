@@ -1,5 +1,6 @@
 package com.javarush.task.task27.task2712;
 
+import com.javarush.task.task27.task2712.ad.StatisticAdvertisementManager;
 import com.javarush.task.task27.task2712.statistic.StatisticManager;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +39,20 @@ public class DirectorTablet {
             ConsoleHelper.writeMessage("");
         }
     }
-    public void printActiveVideoSet(){}
-    public void printArchivedVideoSet(){}
+    public void printActiveVideoSet(){
+        StatisticAdvertisementManager
+                .getInstance()
+                .getActiveAd()
+                .stream()
+                .sorted((s1,s2)->(s1.getName().compareTo(s2.getName())))
+                .forEach(s-> ConsoleHelper.writeMessage(s.getName() + " - " + s.getHits()));
+    }
+    public void printArchivedVideoSet(){
+        StatisticAdvertisementManager
+                .getInstance()
+                .getArchivedAd()
+                .stream()
+                .sorted((s1, s2) -> (s1.getName().toUpperCase().compareTo(s2.getName().toUpperCase())))
+                .forEach(s -> ConsoleHelper.writeMessage(s.getName()));
+    }
 }

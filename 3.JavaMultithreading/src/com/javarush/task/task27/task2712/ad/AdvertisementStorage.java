@@ -10,9 +10,15 @@ public class AdvertisementStorage {
     private AdvertisementStorage() {
         Object someContent = new Object();
         videos.add(new Advertisement(someContent, "First Video" , 5000, 100, 3 * 60 )); // 3 min
-        videos.add(new Advertisement(someContent, "First Video2" , 5100, 100, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "Русское Video2" , 5100, 15, 3 * 60 )); // 3 min
         videos.add(new Advertisement(someContent, "First Video3" , 2500, 100, 3 * 60 )); // 3 min
-        videos.add(new Advertisement(someContent, "First Video4" , 3100, 100, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "Русское Video4" , 3100, 20, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "Еусское Video5" , 3100, 2, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "Ёусское Video6" , 3100, 2, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "Жусское Video7" , 3100, 2, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "еусское Video8" , 3100, 2, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "жусское Video9" , 3100, 2, 3 * 60 )); // 3 min
+        videos.add(new Advertisement(someContent, "ёусское Video10" , 3100, 2, 3 * 60 )); // 3 min
         videos.add(new Advertisement(someContent, "First Video5" , 4100, 100, 3 * 60 )); // 3 min
         videos.add(new Advertisement(someContent, "Second Video", 100 , 10 , 15 * 60)); //15 min
         videos.add(new Advertisement(someContent, "Third Video" , 400 , 2  , 10 * 60)); //10 min

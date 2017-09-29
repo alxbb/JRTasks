@@ -12,7 +12,7 @@ public class Order {
 
     public Order(Tablet tablet) throws IOException {
         this.tablet = tablet;
-        dishes = ConsoleHelper.getAllDishesForOrder();
+        initDishes();
     }
 
     @Override
@@ -22,7 +22,6 @@ public class Order {
             ret = String.format("Your order: [%s] of %s", orderedString(), tablet.toString());
         return ret;
     }
-
     private String orderedString() {
         boolean isAddSeparator = false;
         String ret = "";
@@ -33,19 +32,20 @@ public class Order {
         }
         return ret;
     }
-
     public int getTotalCookingTime(){
         int duration = 0;
         for(Dish d : dishes) duration+=d.getDuration();
         return duration;
     }
-    public boolean isEmpty(){return dishes.size()==0 ? true : false;}
-
+    public boolean isEmpty(){return dishes.isEmpty();}
     public List<Dish> getDishes() {
         return dishes;
     }
-
     public Tablet getTablet() {
         return tablet;
+    }
+
+    protected void initDishes() throws IOException {
+        dishes = ConsoleHelper.getAllDishesForOrder();
     }
 }

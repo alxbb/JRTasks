@@ -6,9 +6,7 @@ import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataR
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class AdvertisementManager {
@@ -21,7 +19,7 @@ public class AdvertisementManager {
     }
 
     public void processVideos() throws NoVideoAvailableException {
-        if (storage.list().size() == 0) throw new NoVideoAvailableException();
+        if (storage.list().size() == 0 || storage.list().isEmpty() || storage.list() == null) throw new NoVideoAvailableException();
         List<Advertisement> videos = storage.list();
         sortList(videos);
 //        ConsoleHelper.writeMessage("=======================VIDEOS========================");
