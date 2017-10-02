@@ -10,99 +10,48 @@ import java.util.List;
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.createExpression(5);
+        solution.createExpression(74);
     }
 
     public void createExpression(int number) {
         StringBuilder sOut = new StringBuilder(number + " =");
-        List<Integer> list = new ArrayList<>();
-        int ost;
-        int result = number;
+        List<Integer> lint = new ArrayList<>();
         int before;
+        int result = number;
+        int rest;
 
-        while (true) {
+        while(true){
             before = result;
-            ost = result % 3;
-            result = result / 3;
-            if (ost == 2) result++;
-            if (before > 3) {
-                list.add(ost);
-            } else if(result == 2) {
-                list.add(2);
-                list.add(1);
-                list.add(-1);
-            } else {
-                list.add(result);
-                list.add(-1);
+            rest = before%3;
+            result = before / 3;
+            if(rest == 2) result+=1;
+            lint.add(new Integer(rest));
+            if(result < 3) {
+                lint.add(result);
                 break;
             }
         }
-        list.stream().forEach(System.out::print);
-        System.out.println();
 
-        for (int i = 0; i < list.size(); i++) {
-            switch (list.get(i)) {
-                case 0:
-                    sOut.append("");
-                    break;
-                case 1:
-                    sOut.append(" + ").append((int) Math.pow(3, i));
-                    break;
-                case 2:
-                    sOut.append(" - ").append((int) Math.pow(3, i));
-                    break;
-                case -1:
-                    sOut.append(" + ").append((int) Math.pow(3, i));
-                    break;
+        for (int i = 0; i < lint.size(); i++) {
+            if(i < lint.size() - 1 ){
+                switch (lint.get(i)){
+                    case 0: continue;
+                    case 1: sOut.append(" + " + (int)Math.pow(3, i)); break;
+                    case 2: sOut.append(" - " + (int)Math.pow(3, i)); break;
+                }
+            } else {
+                switch (lint.get(i)){
+                    case 0: sOut.append(" + " + (int)Math.pow(3, i)); break;
+                    case 1: sOut.append(" + " + (int)Math.pow(3, i)); break;
+                    case 2:
+                        sOut.append(" - " + (int)Math.pow(3, i));
+                        sOut.append(" + " + (int)Math.pow(3, i+1));
+                        break;
+                }
             }
-
         }
+//        lint.stream().forEach(s->System.out.print(s + " "));
+//        System.out.println();
         System.out.println(sOut);
     }
-//    public void createExpression(int number) {
-//        List<String> triza = new ArrayList<>();
-//        StringBuilder sOut = new StringBuilder();
-//        sOut.append(number).append(" =");
-//        int result = number;
-//        int ost = 0;
-//        int before;
-//        while (true){
-//            before = result;
-//            ost = result%3;
-//            result = result/3;
-//            if(ost == 2) result++;
-//            if(before > 2){
-//                before = result;
-//                switch (ost){
-//                    case 0: triza.add("0"); break;
-//                    case 1: triza.add("+"); break;
-//                    case 2: triza.add("-"); break;
-//                }
-//            } else if(before ==2){
-//                triza.add("-");
-//                triza.add("+");
-//                triza.add("end");
-//                break;
-//            } else {
-//                triza.add("0");
-//                triza.add("end");
-//                break;
-//            }
-//        }
-//        triza.stream().forEach(System.out::print);
-//        System.out.println();
-//        for (int i = 0; i < triza.size() ; i++) {
-//            System.out.println("i = " + i + " " + triza.get(i));
-//            switch (triza.get(i)){
-//                case "-":   sOut.append(" - " + (int)Math.pow(3,i));   break;
-//                case "+":   sOut.append(" + " + (int)Math.pow(3,i));   break;
-//                case "+-":  sOut.append(" - " + (int)Math.pow(3,i));   break;
-//                case "0": break; //  sOut.append(" + " + 0*(int)Math.pow(3,i)); break;
-//                case "end": sOut.append(" + " + (int)Math.pow(3,i));   break;
-//                default: continue;
-//            }
-//        }
-//        System.out.println();
-//        System.out.println(sOut);
-//    }
 }
