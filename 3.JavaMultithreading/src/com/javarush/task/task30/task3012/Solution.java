@@ -10,7 +10,7 @@ import java.util.List;
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.createExpression(74);
+        solution.createExpression(Integer.MAX_VALUE);
     }
 
     public void createExpression(int number) {
