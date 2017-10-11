@@ -1,29 +1,24 @@
 package com.javarush.task.task32.task3203;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.*;
+import java.util.Arrays;
 
 /*
 Пишем стек-трейс
 */
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String text = getStackTrace(new IndexOutOfBoundsException("fff"));
-//        System.out.println(text);
+        System.out.println(text);
     }
 
-    public static String getStackTrace(Throwable throwable) {
-        StringWriter writer = new StringWriter();
-        PrintStream sysOut = System.out;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream stream = new PrintStream(baos);
-        System.setOut(stream);
-        throwable.printStackTrace();
-        StringReader reader = new StringReader(baos.toString());
-        BufferedReader br = new BufferedReader(reader);
-        String s = br.lines().reduce((s1,s2)->s1.concat(s2)).toString();
-        writer.write(s);
-        System.setOut(sysOut);
+    public static String getStackTrace(Throwable throwable) throws IOException {
 
+        StringWriter writer = new StringWriter();
+        PrintWriter pw = new PrintWriter(writer);
+        throwable.printStackTrace(pw);
         return writer.toString();
     }
 }
