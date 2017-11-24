@@ -1,6 +1,7 @@
 package com.javarush.task.task27.task2712;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomOrderGeneratorTask implements Runnable {
     private List<Tablet> tablets;
@@ -21,7 +22,7 @@ public class RandomOrderGeneratorTask implements Runnable {
                     tablet.createTestOrder();
                     Thread.sleep(interval);
                 } catch (InterruptedException e) {
-                    break;
+                    return;
                 }
             }
         }

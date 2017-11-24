@@ -16,13 +16,13 @@ public class TestOrder extends Order {
 
     @Override
     protected void initDishes() throws IOException {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        dishes = new ArrayList<>();
-        List<Dish> list = new ArrayList<>(Arrays.asList(Dish.values()));
-        Collections.shuffle(list);
-        int rnd = random.nextInt(list.size());
-        for (int i = 0; i < rnd; i++) {
-            dishes.add(list.get(i));
+        this.dishes = new ArrayList<>();
+        int numRandom = ThreadLocalRandom.current().nextInt(1,Dish.values().length);
+        if (numRandom==0){numRandom=1;}
+        Dish[] dishMas = Dish.values();
+        for(int i = 0; i < numRandom; i++){
+            int random = (int)(Math.random() * (Dish.values().length));
+            dishes.add(dishMas[random]);
         }
     }
 }

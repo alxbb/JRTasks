@@ -16,7 +16,6 @@ import java.util.stream.*;
 public class StatisticManager {
     private static StatisticManager manager = new StatisticManager();
     private StatisticStorage statisticStorage = new StatisticStorage();
-    private Set<Cook> cooks = new HashSet<>();
     private StatisticManager(){}
 
     public static StatisticManager getInstance() {
@@ -24,7 +23,6 @@ public class StatisticManager {
         return manager;
     }
 
-    public void register(Cook cook){ this.cooks.add(cook); }
     public void register(EventDataRow data){
         statisticStorage.put(data);
     }
@@ -47,7 +45,6 @@ public class StatisticManager {
 
     public Map<Long, Map<String,Integer>> getCookBusy(){
         Long date;
-        long amount;
 
         Map<Long, Map<String, Integer>> map = new TreeMap<>((x,y)->(y.compareTo(x)));
         List<EventDataRow> list = statisticStorage.get(EventType.COOKED_ORDER);

@@ -4,32 +4,36 @@ import java.io.*;
 
 /* 
 Найти ошибки
-
-Почему-то при сериализации/десериализации объекта класса B возникают ошибки.
-Найди проблему и исправь ее.
-Класс A не должен реализовывать интерфейсы Serializable и Externalizable.
-В сигнатуре класса В ошибки нет :).
-Метод main не участвует в тестировании.
-
 */
-public class Solution {
+public class Solution implements Serializable {
     public static class A {
         protected String name = "A";
 
         public A(String name) {
             this.name += name;
         }
+
+        public A() {
+        }
     }
 
     public class B extends A implements Serializable {
+        public B() {
+        }
+
         public B(String name) {
             super(name);
             this.name += name;
         }
-//        @Override
-//        whriteObject(ObjectOutputStream oos){
-//
-//        }
+
+        private void writeObject(ObjectOutputStream oos) throws IOException {
+                oos.defaultWriteObject();
+                oos.writeObject(name);
+        }
+        private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+                ois.defaultReadObject();
+                name = (String) ois.readObject();
+        }
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

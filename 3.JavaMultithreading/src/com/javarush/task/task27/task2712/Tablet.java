@@ -9,16 +9,22 @@ import com.javarush.task.task27.task2712.statistic.event.NoAvailableVideoEventDa
 
 import java.io.IOException;
 import java.util.Observable;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Tablet extends Observable {
+public class Tablet{
     private static Logger logger = Logger.getLogger(Tablet.class.getName());
-//    private Order order;
     final int number;
+    private LinkedBlockingQueue<Order> queue;
+
 
     public Tablet(int number) {
         this.number = number;
+    }
+
+    public void setQueue(LinkedBlockingQueue<Order> queue) {
+        this.queue = queue;
     }
 
     @Override
@@ -27,19 +33,20 @@ public class Tablet extends Observable {
     }
 
     public void createOrder() {
+        Order order = null;
         try {
-            Order order = new Order(this);
+            order = new Order(this);
             processOrder(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
         }
-//        return order;
     }
 
     public void createTestOrder() {
+        TestOrder testOrder = null;
         try {
-            TestOrder order = new TestOrder(this);
-            processOrder(order);
+            testOrder = new TestOrder(this);
+            processOrder(testOrder);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
         }
@@ -48,8 +55,7 @@ public class Tablet extends Observable {
     private void processOrder(Order order) {
         if (!order.isEmpty()) {
             ConsoleHelper.writeMessage(order.toString());
-            setChanged();
-            notifyObservers(order);
+            queue.offer(order);
             try{
                 new AdvertisementManager(order.getTotalCookingTime() * 60).processVideos();
             }        catch (NoVideoAvailableException e) {
@@ -58,7 +64,6 @@ public class Tablet extends Observable {
                         .getInstance()
                         .register(new NoAvailableVideoEventDataRow(order.getTotalCookingTime()*60));
             }
-
         }
     }
 }

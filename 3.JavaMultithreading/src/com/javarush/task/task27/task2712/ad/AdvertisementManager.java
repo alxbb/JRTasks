@@ -7,6 +7,7 @@ import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataR
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class AdvertisementManager {
@@ -31,7 +32,8 @@ public class AdvertisementManager {
         sortList(toShow);
         printList(toShow);
         toShow.stream().forEach(Advertisement::revalidate);
-        Long amount = toShow.stream().map(a->a.getAmountPerOneDisplaying()).reduce(Long::sum).get();
+        try {
+            Long amount = toShow.stream().map(a -> a.getAmountPerOneDisplaying()).reduce(Long::sum).get();
 
         StatisticManager
                 .getInstance()
@@ -40,6 +42,9 @@ public class AdvertisementManager {
                                 toShow,
                                 amount,
                                 timeSeconds));
+        } catch (NoSuchElementException e){
+            throw new NoVideoAvailableException();
+        }
     }
 
     private void sortList(List<Advertisement> toSort) {
