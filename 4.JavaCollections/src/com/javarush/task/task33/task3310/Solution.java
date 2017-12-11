@@ -1,6 +1,8 @@
 package com.javarush.task.task33.task3310;
 
 import com.javarush.task.task33.task3310.strategy.*;
+import com.javarush.task.task33.task3310.tests.FunctionalTest;
+import com.javarush.task.task33.task3310.tests.SpeedTest;
 
 import java.io.IOException;
 import java.util.*;
@@ -9,20 +11,10 @@ import java.util.stream.Collectors;
 public class Solution {
     public static Set<Long> getIds(Shortener shortener, Set<String> strings) {
         return strings.stream().map(shortener::getId).collect(Collectors.toSet());
-//        Set<Long> set = new HashSet<>();
-//        for (String s : strings) {
-//            set.add(shortener.getId(s));
-//        }
-//        return set;
     }
 
     public static Set<String> getStrings(Shortener shortener, Set<Long> keys) {
         return keys.stream().map(shortener::getString).collect(Collectors.toSet());
-//        Set<String> set = new HashSet<>();
-//        for (Long l : keys) {
-//            set.add(shortener.getString(l));
-//        }
-//        return set;
     }
 
     public static void testStrategy(StorageStrategy strategy, long elementsNumber) {
@@ -61,14 +53,22 @@ public class Solution {
     public static void main(String[] args) throws IOException, InterruptedException {
 //        System.out.println(System.getenv("temp"));
         Solution solution = new Solution();
-        testStrategy(new HashMapStorageStrategy(), 10000L);
-        testStrategy(new OurHashMapStorageStrategy(), 10000L);
-        testStrategy(new OurHashBiMapStorageStrategy(), 10000L);
-        testStrategy(new HashBiMapStorageStrategy(), 10000L);
-        testStrategy(new DualHashBidiMapStorageStrategy(), 10000L);
-        testStrategy(new FileStorageStrategy(), 100L);
+//        testStrategy(new HashMapStorageStrategy(), 10000L);
+//        testStrategy(new OurHashMapStorageStrategy(), 10000L);
+//        testStrategy(new OurHashBiMapStorageStrategy(), 10000L);
+//        testStrategy(new HashBiMapStorageStrategy(), 10000L);
+//        testStrategy(new DualHashBidiMapStorageStrategy(), 10000L);
+//        testStrategy(new FileStorageStrategy(), 100L);
+        FunctionalTest ft = new FunctionalTest();
+        ft.testDualHashBidiMapStorageStrategy();
+        ft.testFileStorageStrategy();
+        ft.testHashBiMapStorageStrategy();
+        ft.testHashMapStorageStrategy();
+        ft.testOurHashBiMapStorageStrategy();
+        ft.testOurHashMapStorageStrategy();
 
-
+        SpeedTest st = new SpeedTest();
+        st.testHashMapStorage();
 
 //        FileBucket fileBucket = new FileBucket();
 //        fileBucket.putEntry(new Entry(100, 1000L, "10000", null));
